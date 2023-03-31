@@ -74,13 +74,13 @@ export async function signinDoctors(req,res){
 
 
         const token = Jwt.sign(
-            { userId: userCheck.rows[0].id },
+            { doctorId: userCheck.rows[0].id },
             process.env.SECRET_KEY,
             { expiresIn: 86400 }
           );
           return res.send({
             token: token,
-            userId: userCheck.rows[0].id,
+            doctorId: userCheck.rows[0].id,
           });
             
     } catch (error) {
