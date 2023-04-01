@@ -34,3 +34,11 @@ export async function showDoctorsAppointment(doctorsId){
     on s."usersId"= u.id
     where s."doctorsId" = $1`,[doctorsId])
 }
+
+export async function confirmConsult(consultId,confirm){
+    return await db.query(`
+    UPDATE schedule
+    SET confirmation = $1
+    WHERE id = $2
+    `,[confirm,consultId])
+}

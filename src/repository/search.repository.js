@@ -15,3 +15,13 @@ export async function searchByLocalization(localization){
     SELECT name, specialty, localization FROM doctors WHERE localization = $1
     `,[localization])
 }
+export async function historic(usersId){
+    return await db.query(`
+    SELECT s."consultTime",s."consultDate",u.name as patient, d.specialty
+    FROM schedule s
+    left join users u
+    on s."usersId"= u.id
+	left join doctors d
+	on s."doctorsId" = d.id
+    where s."consultDone" = true AND u.id = $1`,[usersId])
+}

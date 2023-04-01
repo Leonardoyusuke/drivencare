@@ -1,4 +1,4 @@
-import { getSchedule,getAppointment, showUsersAppointment,showDoctorsAppointment } from "../repository/schedule.repository.js"
+import { getSchedule,getAppointment, showUsersAppointment,showDoctorsAppointment, confirmConsult } from "../repository/schedule.repository.js"
 
 export async function schedule(req,res){
     const doctorsId = req.params.doctorsid
@@ -49,6 +49,18 @@ export async function getDoctorsSchedule(req,res){
         const appointments = await showDoctorsAppointment(doctorsId)
         console.log(appointments)
         res.send(appointments.rows)
+    } catch (error) {
+        res.status(500).send(error.message);
+
+    }
+}
+
+export async function confirmaAppoitment(req,res){
+    const {consultId,confirmation} = req.body
+
+    try {
+        const confirm = await confirmConsult(consultId,confirmation)
+        res.send("done")
     } catch (error) {
         res.status(500).send(error.message);
 

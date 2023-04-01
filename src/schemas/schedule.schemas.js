@@ -6,3 +6,8 @@ export const appointmentSchema = joi.object({
   consultDate: joi.required(),
   consultTime: joi.required()
 });
+
+export const confirmationSchema = joi.object({
+  consultId: joi.required(),
+  confirmation: joi.required()
+})
