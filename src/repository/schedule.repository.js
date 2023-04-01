@@ -16,3 +16,21 @@ export async function getAppointment(doctorsId, usersId, consultTime, consultDat
     `,[usersId,doctorsId])
 }
 
+export async function showUsersAppointment(usersId){
+    return await db.query(`
+    SELECT s."usersId",s."doctorsId",s."consultTime",TO_CHAR(s."consultDate", 'DD-MM-YYYY') as consultDate,d.specialty
+    FROM schedule s
+    left join doctors d
+    on s."doctorsId" = d.id 
+    WHERE s."usersId" = $1`,[usersId])
+}
+export async function showDoctorsAppointment(doctorsId){
+    return await db.query(`
+    SELECT s."consultTime",s."consultDate",u.name as patient,d.specialty
+    FROM schedule s
+    left join doctors d
+    on s."doctorsId" = d.id
+    left join users u
+    on s."usersId"= u.id
+    where s."doctorsId" = $1`,[doctorsId])
+}
