@@ -1,6 +1,8 @@
 import { getSchedule,getAppointment, showUsersAppointment,showDoctorsAppointment, confirmConsult } from "../repository/schedule.repository.js"
 
 export async function schedule(req,res){
+    const availableHours = ["09:00:00","10:00:00","11:00:00","13:00:00","14:00:00","15:00:00","16:00:00","17:00:00"]
+    console.log(availableHours)
     const doctorsId = req.params.doctorsid
     console.log(doctorsId)
 
@@ -8,7 +10,9 @@ export async function schedule(req,res){
         const calendar = await getSchedule(doctorsId)
         if (calendar.rowCount==0){
             return("all available")
-        } 
+        }
+        // const filteredCalendar = availableHours.filter(calendar.rows.hour) 
+        // console.log(filteredCalendar)
         res.send(calendar.rows)
     } catch (error) {
         res.status(500).send(error.message);
